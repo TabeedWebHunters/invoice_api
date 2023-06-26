@@ -1,0 +1,67 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UserSchema {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  role: String!
+  invoices: [InvoiceSchema!]
+}
+
+type InvoiceSchema {
+  invoice_id: ID!
+  user: UserSchema!
+  invoice_number: String!
+  issue_date: DateTime!
+  due_date: DateTime!
+  total_amount: Float!
+  status: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type ItemSchema {
+  item_id: ID!
+  invoice: InvoiceSchema!
+  description: String!
+  quantity: Float!
+  unit_price: Float!
+  line_total: Float!
+}
+
+type Query {
+  index: String!
+  login(email: String!, password: String!): String!
+  invoices: [InvoiceSchema!]!
+}
+
+type Mutation {
+  signup(firstName: String!, lastName: String!, email: String!, password: String!, role: String!): String!
+  addInvoice(addInvoiceInput: AddInvoiceArgs!, userEmail: String!): InvoiceSchema!
+  deleteInvoice(invoiceId: String!): Boolean!
+  updateInvoice(invoiceId: String!, updateInvoiceInput: AddInvoiceArgs!): InvoiceSchema!
+  deleteUserByEmail(email: String!): Boolean!
+  createItem(invoiceId: String!, createItemInput: CreateItemInput!): ItemSchema!
+}
+
+input AddInvoiceArgs {
+  invoice_number: String!
+  issue_date: DateTime!
+  due_date: DateTime!
+  total_amount: Float!
+  status: String!
+}
+
+input CreateItemInput {
+  description: String!
+  quantity: Int!
+  unitPrice: Int!
+  lineTotal: Int!
+}
